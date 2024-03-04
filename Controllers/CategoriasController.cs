@@ -21,6 +21,8 @@ namespace API_Peliculas.Controllers
             _mapper = mapper;
         }
 
+        // ///////////////////////////////////////////////////////////////////////////////////
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status403Forbidden)] //EndPoints
         [ProducesResponseType(StatusCodes.Status200OK)] //EndPoints
@@ -37,6 +39,7 @@ namespace API_Peliculas.Controllers
             return Ok(listaCategoriasDto);
         }
 
+        // ///////////////////////////////////////////////////////////////////////////////////
         //12º PASO
         [HttpGet("{categoriaId:int}", Name = "GetCategoria")]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -54,6 +57,8 @@ namespace API_Peliculas.Controllers
             return Ok(itemCategoriaDto);
         }
 
+        // ///////////////////////////////////////////////////////////////////////////////////
+        //13º PASO
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(CategoriaDto))]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -81,6 +86,9 @@ namespace API_Peliculas.Controllers
 
             return CreatedAtRoute("GetCategoria", new { categoriaId = categoria.Id }, categoria);
         }
+
+        // ///////////////////////////////////////////////////////////////////////////////////
+        //14º PASO
     }
 }
 
