@@ -21,6 +21,8 @@ namespace API_Peliculas.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)] //EndPoints
+        [ProducesResponseType(StatusCodes.Status200OK)] //EndPoints
         public IActionResult GetCategorias()
         {
             var listaCategorias = _ctRepo.GetCategorias();
@@ -33,5 +35,23 @@ namespace API_Peliculas.Controllers
 
             return Ok(listaCategoriasDto);
         }
+
+        //12º PASO
+        [HttpGet("{categoriaId:int}", Name = "GetCategoria")]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)] //EndPoints
+        [ProducesResponseType(StatusCodes.Status200OK)] //EndPoints
+        [ProducesResponseType(StatusCodes.Status400BadRequest)] //EndPoints
+        [ProducesResponseType(StatusCodes.Status404NotFound)] //EndPoints
+        public IActionResult GetCategoria(int categoriaId)
+        {
+            var itemCategoria = _ctRepo.GetCategoria(categoriaId);
+
+            if (itemCategoria == null) return NotFound();
+
+            var itemCategoriaDto = _mapper.Map<CategoriaDto>(categoriaId);
+
+            return Ok(itemCategoriaDto);
+        }
     }
 }
+
