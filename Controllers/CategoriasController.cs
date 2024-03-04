@@ -69,7 +69,7 @@ namespace API_Peliculas.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             if (crearCategoriaDto == null) return BadRequest(ModelState);
-            
+
             if (_ctRepo.ExisteCategoria(crearCategoriaDto.Nombre))
             {
                 ModelState.AddModelError("", "La categoría ya existe");
@@ -80,7 +80,7 @@ namespace API_Peliculas.Controllers
 
             if (!_ctRepo.CrearCategoria(categoria))
             {
-                ModelState.AddModelError("", $"Algo salió mal al guardar el registro{categoria.Nombre}");
+                ModelState.AddModelError("", $"Algo salió mal al guardar el registro {categoria.Nombre}");
                 return StatusCode(500, ModelState);
             }
 
@@ -103,7 +103,29 @@ namespace API_Peliculas.Controllers
 
             if (!_ctRepo.ActualizarCategoria(categoria))
             {
-                ModelState.AddModelError("", $"Algo salió mal actualizando el registro{categoria.Nombre}");
+                ModelState.AddModelError("", $"Algo salió mal actualizando el registro {categoria.Nombre}");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
+        }
+
+        // ///////////////////////////////////////////////////////////////////////////////////
+        //15º PASO
+        [HttpDelete("{categoriaId:int}", Name = "BorrarCategoria")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult BorrarCategoria(int categoriaId)
+        {
+            if (!_ctRepo.ExisteCategoria(categoriaId)) return NotFound();
+
+            var categoria = _ctRepo.GetCategoria(categoriaId);
+
+            if (!_ctRepo.BorrarCategoria(categoria))
+            {
+                ModelState.AddModelError("", $"Algo salió mal borrando el registro {categoria.Nombre}");
                 return StatusCode(500, ModelState);
             }
 
