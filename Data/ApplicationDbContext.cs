@@ -12,5 +12,6 @@ namespace API_Peliculas.Data
 
         //AGREGAR LOS MODELOS AQUI
         public DbSet<Categoria> Categoria { get; set; }
+        public DbSet<Pelicula> Pelicula { get; set; }
     }
 }

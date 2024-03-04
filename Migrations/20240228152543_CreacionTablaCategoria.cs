@@ -12,7 +12,7 @@ namespace API_Peliculas.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Categorias",
+                name: "Categoria",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -22,7 +22,7 @@ namespace API_Peliculas.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Categorias", x => x.Id);
+                    table.PrimaryKey("PK_Categoria", x => x.Id);
                 });
         }
 
@@ -30,7 +30,7 @@ namespace API_Peliculas.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Categorias");
+                name: "Categoria");
         }
     }
 }
