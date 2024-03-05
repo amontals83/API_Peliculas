@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API_Peliculas.Modelos.Dtos
 {
-    //18º PASO
+    //19º PASO
     public class PeliculaDto
     {
         public int Id { get; set; }

@@ -2,7 +2,7 @@
 
 namespace API_Peliculas.Repositorio.IRepositorio
 {
-    //20º PASO
+    //21º PASO
     public interface IPeliculaRepositorio
     {
         ICollection<Pelicula> GetPeliculas();

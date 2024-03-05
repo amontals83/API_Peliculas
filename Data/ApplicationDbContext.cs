@@ -12,6 +12,9 @@ namespace API_Peliculas.Data
 
         //AGREGAR LOS MODELOS AQUI
         public DbSet<Categoria> Categoria { get; set; }
+        //17º PASO -> siguiente paso es un txt
         public DbSet<Pelicula> Pelicula { get; set; }
+        //26º PASO -> siguiente paso es un txt
+        public DbSet<Usuario> Usuario { get; set; }
     }
 }

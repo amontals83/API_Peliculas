@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API_Peliculas.Controllers
 {
-    //22º PASO
+    //23º PASO
     [Route("api/peliculas")] //[Route("api/[controller]")] //Es otra opcion
     [ApiController]
     public class PeliculasController : ControllerBase

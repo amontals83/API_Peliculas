@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//4º PASO - CONFIGURAMOS LA CONEXION A SQL SERVER Y AGREGAMOS REPOSITORIOS Y AUTOMAPPER
+//4º PASO - CONFIGURAMOS LA CONEXION A SQL SERVER Y AGREGAMOS REPOSITORIOS Y AUTOMAPPER -> siguiente paso es un txt
 builder.Services.AddDbContext<ApplicationDbContext>(opciones =>
 {
     opciones.UseSqlServer(builder.Configuration.GetConnectionString("ConexionSql"));
@@ -14,7 +14,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(opciones =>
 
 //AGREGAMOS LOS REPOSITORIOS
 builder.Services.AddScoped<ICategoriaRepositorio, CategoriaRepositorio>();
-//23º PASO
+//24º PASO
 builder.Services.AddScoped<IPeliculaRepositorio, PeliculaRepositorio>();
 
 //AGREGAMOS EL AUTOMAPPER
