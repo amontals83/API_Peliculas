@@ -11,19 +11,6 @@ namespace API_Peliculas.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_Categorias",
-                table: "Categorias");
-
-            migrationBuilder.RenameTable(
-                name: "Categorias",
-                newName: "Categoria");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_Categoria",
-                table: "Categoria",
-                column: "Id");
-
             migrationBuilder.CreateTable(
                 name: "Pelicula",
                 columns: table => new
@@ -60,19 +47,6 @@ namespace API_Peliculas.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Pelicula");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_Categoria",
-                table: "Categoria");
-
-            migrationBuilder.RenameTable(
-                name: "Categoria",
-                newName: "Categorias");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_Categorias",
-                table: "Categorias",
-                column: "Id");
         }
     }
 }

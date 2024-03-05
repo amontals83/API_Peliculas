@@ -24,8 +24,8 @@ namespace API_Peliculas.Controllers
         // ///////////////////////////////////////////////////////////////////////////////////
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)] //EndPoints
-        [ProducesResponseType(StatusCodes.Status200OK)] //EndPoints
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public IActionResult GetCategorias()
         {
             var listaCategorias = _ctRepo.GetCategorias();
@@ -42,8 +42,8 @@ namespace API_Peliculas.Controllers
         // ///////////////////////////////////////////////////////////////////////////////////
         //12º PASO
         [HttpGet("{categoriaId:int}", Name = "GetCategoria")]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetCategoria(int categoriaId)
@@ -84,7 +84,7 @@ namespace API_Peliculas.Controllers
                 return StatusCode(500, ModelState);
             }
 
-            return CreatedAtRoute("GetCategoria", new { categoriaId = categoria.Id }, categoria);
+            return CreatedAtRoute("GetCategoria", new { categoriaId = categoria.Id }, categoria); //SE DEVUELVE EL ID DE LA CATEGORIA QUE SE CREÓ
         }
 
         // ///////////////////////////////////////////////////////////////////////////////////

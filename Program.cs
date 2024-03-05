@@ -14,6 +14,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(opciones =>
 
 //AGREGAMOS LOS REPOSITORIOS
 builder.Services.AddScoped<ICategoriaRepositorio, CategoriaRepositorio>();
+//23º PASO
+builder.Services.AddScoped<IPeliculaRepositorio, PeliculaRepositorio>();
 
 //AGREGAMOS EL AUTOMAPPER
 builder.Services.AddAutoMapper(typeof(PeliculasMapper));

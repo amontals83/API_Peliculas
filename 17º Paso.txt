@@ -1,6 +1,6 @@
 ﻿MIGRACION 
 Herramientas->Administrador paquete de Nuget->Consola de administracion
 
-add-migration CreacionTabla'NombreTabla'
+add-migration CreacionTablaPelicula
 update-database
 

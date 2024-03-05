@@ -1,22 +1,25 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace API_Peliculas.Modelos
+namespace API_Peliculas.Modelos.Dtos
 {
-    //16º PASO
-    public class Pelicula
+    //18º PASO
+    public class PeliculaDto
     {
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "El nombre es obligatorio")]
         public string Nombre { get; set; }
         public string RutaImagen { get; set; }
+
+        [Required(ErrorMessage = "La descripción es obligatoria")]
         public string Descripcion { get; set; }
-        public int Duracion { get; set;}
+
+        [Required(ErrorMessage = "La duración es obligatoria")]
+        public int Duracion { get; set; }
         public enum TipoClasificacion { Siete, Trece, Dieciseis, Dieciocho }
         public TipoClasificacion Clasificacion { get; set; }
         public DateTime FechaCreacion { get; set; }
-
-        [ForeignKey("categoriaId")]
         public int categoriaId { get; set; }
-        public Categoria Categoria { get; set; }
     }
 }
