@@ -41,8 +41,8 @@ namespace API_Peliculas.Controllers
 
         [HttpGet("{peliculaId:int}", Name = "GetPelicula")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetPelicula(int peliculaId)
         {
@@ -87,6 +87,49 @@ namespace API_Peliculas.Controllers
         }
 
         // ///////////////////////////////////////////////////////////////////////////////////
+
+        [HttpPatch("{peliculaId:int}", Name = "ActualizarPatchPelicula")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult ActualizarPatchPelicula(int peliculaId, [FromBody] PeliculaDto peliculaDto) //LO RECIBE EN FORMATO JSON
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            if (peliculaDto == null || peliculaId != peliculaDto.Id) return BadRequest(ModelState);
+
+            var pelicula = _mapper.Map<Pelicula>(peliculaDto);
+
+            if (!_pelRepo.ActualizarPelicula(pelicula))
+            {
+                ModelState.AddModelError("", $"Algo salió mal actualizando el registro {pelicula.Nombre}");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
+        }
+
+        // ///////////////////////////////////////////////////////////////////////////////////
+        
+        [HttpDelete("{peliculaId:int}", Name = "BorrarPelicula")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult BorrarPelicula(int peliculaId)
+        {
+            if (!_pelRepo.ExistePelicula(peliculaId)) return NotFound();
+
+            var pelicula = _pelRepo.GetPelicula(peliculaId);
+
+            if (!_pelRepo.BorrarPelicula(pelicula))
+            {
+                ModelState.AddModelError("", $"Algo salió mal borrando el registro {pelicula.Nombre}");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
+        }
     }
 }
 
