@@ -39,6 +39,8 @@ namespace API_Peliculas.Controllers
             return Ok(listaPeliculasDto);
         }
 
+        // ///////////////////////////////////////////////////////////////////////////////////
+
         [HttpGet("{peliculaId:int}", Name = "GetPelicula")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -130,6 +132,27 @@ namespace API_Peliculas.Controllers
 
             return NoContent();
         }
+
+        // ///////////////////////////////////////////////////////////////////////////////////
+
+        [HttpGet("GetPeliculasEnCategoria/{categoriaId:int}")]
+        public IActionResult GetPeliculasEnCategoria(int categoriaId)
+        {
+            var listaPeliculas = _pelRepo.GetPeliculasEnCategorias(categoriaId);
+
+            if (listaPeliculas == null) return NotFound();
+
+            var itemPelicula = new List<PeliculaDto>();            
+
+            foreach (var item in listaPeliculas)
+            {
+                itemPelicula.Add(_mapper.Map<PeliculaDto>(item));
+            }
+
+            return Ok(itemPelicula);
+        }
+
+        // ///////////////////////////////////////////////////////////////////////////////////
     }
 }
 
