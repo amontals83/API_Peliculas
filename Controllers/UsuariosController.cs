@@ -4,6 +4,7 @@ using API_Peliculas.Repositorio.IRepositorio;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace API_Peliculas.Controllers
 {
@@ -14,11 +15,13 @@ namespace API_Peliculas.Controllers
     {
         private readonly IUsuarioRepositorio _usRepo;
         private readonly IMapper _mapper;
+        protected RespuestaAPI _respuestaAPI; //41º PASO 1/3
 
         public UsuariosController(IUsuarioRepositorio usRepo, IMapper mapper)
         {
             _usRepo = usRepo;
             _mapper = mapper;
+            this._respuestaAPI = new RespuestaAPI(); //41º PASO 3/3
         }
 
         // ///////////////////////////////////////////////////////////////////////////////////
@@ -58,37 +61,40 @@ namespace API_Peliculas.Controllers
         }
 
         // ///////////////////////////////////////////////////////////////////////////////////
-        //13º PASO
-        [HttpPost]
-        [ProducesResponseType(201, Type = typeof(UsuarioDto))]
+        //40º PASO
+        [HttpPost("registro")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult CrearUsuario([FromBody] CrearUsuarioDto crearUsuarioDto) //LO RECIBE EN FORMATO JSON
+        public async Task<IActionResult> Registro([FromBody] UsuarioRegistroDto usuarioRegistroDto)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            bool validaNombreUsuarioUnico = _usRepo.IsUniqueUser(usuarioRegistroDto.NombreUsuario);
 
-            if (crearUsuarioDto == null) return BadRequest(ModelState);
-
-            if (_usRepo.ExisteUsuario(crearUsuarioDto.Nombre))
+            if (!validaNombreUsuarioUnico)
             {
-                ModelState.AddModelError("", "La categoría ya existe");
-                return StatusCode(404, ModelState);
+                _respuestaAPI.StatusCode = HttpStatusCode.BadRequest;
+                _respuestaAPI.IsSuccess = false;
+                _respuestaAPI.ErrorMessages.Add("El nombre de usuario ya existe");
+                return BadRequest();
             }
 
-            var usuario = _mapper.Map<Usuario>(crearUsuarioDto);
+            var usuario = await _usRepo.Registro(usuarioRegistroDto);
 
-            if (!_usRepo.CrearUsuario(usuario))
+            if (usuario == null)
             {
-                ModelState.AddModelError("", $"Algo salió mal al guardar el registro {usuario.Nombre}");
-                return StatusCode(500, ModelState);
+                _respuestaAPI.StatusCode = HttpStatusCode.BadRequest;
+                _respuestaAPI.IsSuccess = false;
+                _respuestaAPI.ErrorMessages.Add("Error en el registro");
+                return BadRequest(_respuestaAPI);
             }
 
-            return CreatedAtRoute("GetUsuario", new { usuarioId = usuario.Id }, usuario); //SE DEVUELVE EL ID DE LA CATEGORIA QUE SE CREÓ
+            _respuestaAPI.StatusCode = HttpStatusCode.OK;
+            _respuestaAPI.IsSuccess = true;
+            return Ok(_respuestaAPI);
         }
 
         // ///////////////////////////////////////////////////////////////////////////////////
-        //14º PASO
+        /*
         [HttpPatch("{usuarioId:int}", Name = "ActualizarPatchUsuario")]
         [ProducesResponseType(201, Type = typeof(UsuarioDto))]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -131,5 +137,6 @@ namespace API_Peliculas.Controllers
 
             return NoContent();
         }
+        */
     }
 }
