@@ -3,7 +3,7 @@ using API_Peliculas.Modelos.Dtos;
 
 namespace API_Peliculas.Repositorio.IRepositorio
 {
-    //32º PASO
+    //33º PASO
     public interface IUsuarioRepositorio
     {
         ICollection<Usuario> GetUsuarios();

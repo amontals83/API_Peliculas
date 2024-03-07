@@ -8,24 +8,24 @@ using System.Net;
 
 namespace API_Peliculas.Controllers
 {
-    //37º PASO
+    //39º PASO
     [Route("api/usuarios")]
     [ApiController]
     public class UsuariosController : ControllerBase
     {
         private readonly IUsuarioRepositorio _usRepo;
         private readonly IMapper _mapper;
-        protected RespuestaAPI _respuestaAPI; //41º PASO 1/3
+        protected RespuestaAPI _respuestaAPI; //42º PASO 1/3
 
         public UsuariosController(IUsuarioRepositorio usRepo, IMapper mapper)
         {
             _usRepo = usRepo;
             _mapper = mapper;
-            this._respuestaAPI = new RespuestaAPI(); //41º PASO 3/3
+            this._respuestaAPI = new RespuestaAPI(); //42º PASO 3/3
         }
 
         // ///////////////////////////////////////////////////////////////////////////////////
-        //39º PASO
+        //40º PASO
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -55,13 +55,13 @@ namespace API_Peliculas.Controllers
 
             if (itemUsuario == null) return NotFound();
 
-            var itemUsuarioDto = _mapper.Map<UsuarioDto>(usuarioId);
+            var itemUsuarioDto = _mapper.Map<UsuarioDto>(itemUsuario);
 
             return Ok(itemUsuarioDto);
         }
 
         // ///////////////////////////////////////////////////////////////////////////////////
-        //40º PASO
+        //41º PASO
         [HttpPost("registro")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -90,6 +90,30 @@ namespace API_Peliculas.Controllers
 
             _respuestaAPI.StatusCode = HttpStatusCode.OK;
             _respuestaAPI.IsSuccess = true;
+            return Ok(_respuestaAPI);
+        }
+
+        // ///////////////////////////////////////////////////////////////////////////////////
+        //43º PASO
+        [HttpPost("login")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Login([FromBody] UsuarioLoginDto usuarioLoginDto)
+        {
+            var respuestaLogin = await _usRepo.Login(usuarioLoginDto);
+
+            if (respuestaLogin.Usuario == null || string.IsNullOrEmpty(respuestaLogin.Token))
+            {
+                _respuestaAPI.StatusCode = HttpStatusCode.BadRequest;
+                _respuestaAPI.IsSuccess = false;
+                _respuestaAPI.ErrorMessages.Add("El nombre de usuario o password son incorrectos");
+                return BadRequest(_respuestaAPI);
+            }
+
+            _respuestaAPI.StatusCode = HttpStatusCode.OK;
+            _respuestaAPI.IsSuccess = true;
+            _respuestaAPI.Result = respuestaLogin;
             return Ok(_respuestaAPI);
         }
 

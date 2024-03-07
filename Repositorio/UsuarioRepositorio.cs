@@ -11,16 +11,16 @@ using XSystem.Security.Cryptography;
 
 namespace API_Peliculas.Repositorio
 {
-    //33º PASO
+    //34º PASO
     public class UsuarioRepositorio : IUsuarioRepositorio
     {
         private readonly ApplicationDbContext _bd;
-        private string claveSecreta; //36º PASO 3/4
+        private string claveSecreta; //37º PASO 3/4
 
         public UsuarioRepositorio(ApplicationDbContext bd, IConfiguration config)
         {
             _bd = bd;
-            claveSecreta = config.GetValue<string>("ApiSettings:Secreta"); //36º PASO 4/4
+            claveSecreta = config.GetValue<string>("ApiSettings:Secreta"); //37º PASO 4/4
         }
 
         public Usuario GetUsuario(int usuarioId)
@@ -61,7 +61,7 @@ namespace API_Peliculas.Repositorio
             return usuario;
         }
 
-        //34º PASO
+        //35º PASO
         //Método para encriptar contraseña con MD5 se usa tanto en el Acceso como en el Registro
         public static string obtenerMD5(string password)
         {
@@ -74,7 +74,7 @@ namespace API_Peliculas.Repositorio
             return resp;
         }
 
-        //35º PASO
+        //36º PASO
         public async Task<UsuarioLoginRespuestaDto> Login(UsuarioLoginDto usuarioLoginDto)
         {
             var passwordEncriptado = obtenerMD5(usuarioLoginDto.Password);
@@ -92,7 +92,7 @@ namespace API_Peliculas.Repositorio
             }
 
             var manejadorToken = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(claveSecreta); //36º PASO 1/4
+            var key = Encoding.ASCII.GetBytes(claveSecreta); //37º PASO 1/4
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]

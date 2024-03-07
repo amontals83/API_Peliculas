@@ -52,7 +52,7 @@ namespace API_Peliculas.Controllers
 
             if (itemPelicula == null) return NotFound();
 
-            var itemPeliculaDto = _mapper.Map<PeliculaDto>(peliculaId);
+            var itemPeliculaDto = _mapper.Map<PeliculaDto>(itemPelicula);
 
             return Ok(itemPeliculaDto);
         }

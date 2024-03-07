@@ -2,7 +2,7 @@
 
 namespace API_Peliculas.Modelos
 {
-    //41º PASO 2/3
+    //42º PASO 2/3
     public class RespuestaAPI
     {
         public RespuestaAPI()
