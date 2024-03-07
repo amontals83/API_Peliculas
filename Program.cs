@@ -2,7 +2,10 @@ using API_Peliculas.Data;
 using API_Peliculas.PeliculasMapper;
 using API_Peliculas.Repositorio;
 using API_Peliculas.Repositorio.IRepositorio;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,8 +20,29 @@ builder.Services.AddScoped<ICategoriaRepositorio, CategoriaRepositorio>();
 builder.Services.AddScoped<IPeliculaRepositorio, PeliculaRepositorio>(); //24º PASO
 builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>(); //38º PASO
 
+var key = builder.Configuration.GetValue<string>("ApiSettings:Secreta");//44º PASO 4/5
+
 //AGREGAMOS EL AUTOMAPPER
 builder.Services.AddAutoMapper(typeof(PeliculasMapper));
+
+//44º PASO 5/5
+//CONFIGURACION AUTENTICACION
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(x =>
+{
+    x.RequireHttpsMetadata = false;
+    x.SaveToken = true;
+    x.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
+        ValidateIssuer = false,
+        ValidateAudience = false
+    };
+});
 
 // Add services to the container.
 
@@ -27,6 +51,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//44º PASO 1/5
 //SOPORTE PARA CORS
 //Se pueden habilitar: 1-Un dominnio, 2-multiples dominios, 3- cualquier dominio (cuidado la seguridad)
 //Usamos de ejemplo el dominio http://localhost:3223, se debe cambiar por el correcto
@@ -50,8 +75,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+//44º PASO 2/5
 //SOPORTE PARA CORS
 app.UseCors("PolicyCors");
+app.UseAuthentication();
 
 app.UseAuthorization();
 

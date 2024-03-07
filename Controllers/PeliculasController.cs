@@ -2,14 +2,15 @@
 using API_Peliculas.Modelos.Dtos;
 using API_Peliculas.Repositorio.IRepositorio;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API_Peliculas.Controllers
 {
     //23º PASO
-    [Route("api/peliculas")] //[Route("api/[controller]")] //Es otra opcion
     [ApiController]
+    [Route("api/peliculas")] //[Route("api/[controller]")] //Es otra opcion
     public class PeliculasController : ControllerBase
     {
         private readonly IPeliculaRepositorio _pelRepo;
@@ -23,6 +24,7 @@ namespace API_Peliculas.Controllers
 
         // ///////////////////////////////////////////////////////////////////////////////////
 
+        [AllowAnonymous] //45º PASO 3/
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -41,6 +43,7 @@ namespace API_Peliculas.Controllers
 
         // ///////////////////////////////////////////////////////////////////////////////////
 
+        [AllowAnonymous] //45º PASO 4/
         [HttpGet("{peliculaId:int}", Name = "GetPelicula")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -59,10 +62,12 @@ namespace API_Peliculas.Controllers
 
         // ///////////////////////////////////////////////////////////////////////////////////
 
+        [Authorize(Roles = "admin")] //44º PASO 3-4/5
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(PeliculaDto))]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult CrearPelicula([FromBody] PeliculaDto peliculaDto) //LO RECIBE EN FORMATO JSON
@@ -90,9 +95,11 @@ namespace API_Peliculas.Controllers
 
         // ///////////////////////////////////////////////////////////////////////////////////
 
+        [Authorize(Roles = "admin")] //44º PASO 3-5/5
         [HttpPatch("{peliculaId:int}", Name = "ActualizarPatchPelicula")]
         [ProducesResponseType(204)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult ActualizarPatchPelicula(int peliculaId, [FromBody] PeliculaDto peliculaDto) //LO RECIBE EN FORMATO JSON
         {
@@ -112,10 +119,12 @@ namespace API_Peliculas.Controllers
         }
 
         // ///////////////////////////////////////////////////////////////////////////////////
-        
+
+        [Authorize(Roles = "admin")] //44º PASO 3-6/5
         [HttpDelete("{peliculaId:int}", Name = "BorrarPelicula")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult BorrarPelicula(int peliculaId)
@@ -135,6 +144,7 @@ namespace API_Peliculas.Controllers
 
         // ///////////////////////////////////////////////////////////////////////////////////
 
+        [AllowAnonymous] //45º PASO 5/
         [HttpGet("GetPeliculasEnCategoria/{categoriaId:int}")]
         public IActionResult GetPeliculasEnCategoria(int categoriaId)
         {
@@ -154,6 +164,7 @@ namespace API_Peliculas.Controllers
 
         // ///////////////////////////////////////////////////////////////////////////////////
 
+        [AllowAnonymous] //45º PASO 6/
         [HttpGet("Buscar")]
         public IActionResult Buscar(string nombre)
         {

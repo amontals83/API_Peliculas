@@ -5,12 +5,13 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API_Peliculas.Controllers
 {
     //39º PASO
-    [Route("api/usuarios")]
     [ApiController]
+    [Route("api/usuarios")]
     public class UsuariosController : ControllerBase
     {
         private readonly IUsuarioRepositorio _usRepo;
@@ -25,9 +26,12 @@ namespace API_Peliculas.Controllers
         }
 
         // ///////////////////////////////////////////////////////////////////////////////////
+
         //40º PASO
+        [Authorize(Roles = "admin")] //44º PASO 3-7/5
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public IActionResult GetUsuarios()
         {
@@ -43,10 +47,12 @@ namespace API_Peliculas.Controllers
         }
 
         // ///////////////////////////////////////////////////////////////////////////////////
-        
+
+        [Authorize(Roles = "admin")] //44º PASO 3-8/5
         [HttpGet("{usuarioId:int}", Name = "GetUsuario")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetUsuario(int usuarioId)
@@ -61,7 +67,9 @@ namespace API_Peliculas.Controllers
         }
 
         // ///////////////////////////////////////////////////////////////////////////////////
+
         //41º PASO
+        [AllowAnonymous] //45º PASO 7/
         [HttpPost("registro")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -94,7 +102,9 @@ namespace API_Peliculas.Controllers
         }
 
         // ///////////////////////////////////////////////////////////////////////////////////
+
         //43º PASO
+        [AllowAnonymous] //45º PASO 8/
         [HttpPost("login")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -116,51 +126,5 @@ namespace API_Peliculas.Controllers
             _respuestaAPI.Result = respuestaLogin;
             return Ok(_respuestaAPI);
         }
-
-        // ///////////////////////////////////////////////////////////////////////////////////
-        /*
-        [HttpPatch("{usuarioId:int}", Name = "ActualizarPatchUsuario")]
-        [ProducesResponseType(201, Type = typeof(UsuarioDto))]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult ActualizarPatchUsuario(int usuarioId, [FromBody] UsuarioDto usuarioDto) //LO RECIBE EN FORMATO JSON
-        {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-
-            if (usuarioDto == null || usuarioId != usuarioDto.Id) return BadRequest(ModelState);
-
-            var usuario = _mapper.Map<Usuario>(usuarioDto);
-
-            if (!_usRepo.ActualizarUsuario(usuario))
-            {
-                ModelState.AddModelError("", $"Algo salió mal actualizando el registro {usuario.Nombre}");
-                return StatusCode(500, ModelState);
-            }
-
-            return NoContent();
-        }
-
-        // ///////////////////////////////////////////////////////////////////////////////////
-        //15º PASO
-        [HttpDelete("{usuarioId:int}", Name = "BorrarUsuario")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult BorrarUsuario(int usuarioId)
-        {
-            if (!_usRepo.ExisteUsuario(usuarioId)) return NotFound();
-
-            var usuario = _usRepo.GetUsuario(usuarioId);
-
-            if (!_usRepo.BorrarUsuario(usuario))
-            {
-                ModelState.AddModelError("", $"Algo salió mal borrando el registro {usuario.Nombre}");
-                return StatusCode(500, ModelState);
-            }
-
-            return NoContent();
-        }
-        */
     }
 }
