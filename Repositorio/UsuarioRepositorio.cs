@@ -51,7 +51,7 @@ namespace API_Peliculas.Repositorio
             {
                 NombreUsuario = usuarioRegistroDto.NombreUsuario,
                 Nombre = usuarioRegistroDto.Nombre,
-                Password = usuarioRegistroDto.Password,
+                Password = passwordEncriptado,
                 Role = usuarioRegistroDto.Role
             };
 
