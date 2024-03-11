@@ -3,7 +3,7 @@
     //31º PASO
     public class UsuarioLoginRespuestaDto //ES PARA OBTENER EL USUARIO Y EL TOKEN UNA VEZ LOGUEADO CORRECTAMENTE 
     {
-        public Usuario Usuario { get; set; }
+        public UsuarioDatosDto Usuario { get; set; }
         public string Token { get; set; }
     }
 }

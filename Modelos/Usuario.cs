@@ -2,7 +2,7 @@
 
 namespace API_Peliculas.Modelos
 {
-    //25º PASO
+    //25º PASO - LOS SIGUIENTES PASOS PARA EL USUARIO SON SOLO SI NO SE APLICA IDENTITY
     public class Usuario
     {
         [Key]

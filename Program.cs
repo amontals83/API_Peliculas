@@ -1,4 +1,5 @@
 using API_Peliculas.Data;
+using API_Peliculas.Modelos;
 using API_Peliculas.PeliculasMapper;
 using API_Peliculas.Repositorio;
 using API_Peliculas.Repositorio.IRepositorio;
@@ -19,7 +20,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(opciones =>
 });
 
 //50º - SOPORTE PARA LA AUTENTICACION CON .NET IDENTITY
-builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddIdentity<AppUsuario, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddResponseCaching(); //47º - AÑADIMOS LA CACHE PARA FACILITAR EL ACCESO A DATOS QUE SON SIEMPRE DEL MISMO VALOR
 

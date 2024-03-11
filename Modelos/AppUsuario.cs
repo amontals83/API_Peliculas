@@ -8,6 +8,5 @@ namespace API_Peliculas.Modelos
         //AÑADIR CAMPOS PERSONALIZADOS
         public string Nombre { get; set; }
         public string Ciudad { get; set; }
-        public AppUsuario() { }
     }
 }
