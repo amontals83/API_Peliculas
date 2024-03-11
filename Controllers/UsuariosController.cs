@@ -9,26 +9,26 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace API_Peliculas.Controllers
 {
-    //39º PASO
+    //39º
     [ApiController]
     [Route("api/usuarios")]
     public class UsuariosController : ControllerBase
     {
         private readonly IUsuarioRepositorio _usRepo;
         private readonly IMapper _mapper;
-        protected RespuestaAPI _respuestaAPI; //42º PASO 1/3
+        protected RespuestaAPI _respuestaAPI; //42º - 1/3
 
         public UsuariosController(IUsuarioRepositorio usRepo, IMapper mapper)
         {
             _usRepo = usRepo;
             _mapper = mapper;
-            this._respuestaAPI = new RespuestaAPI(); //42º PASO 3/3
+            this._respuestaAPI = new RespuestaAPI(); //42º - 3/3
         }
 
         // ///////////////////////////////////////////////////////////////////////////////////
 
-        //40º PASO
-        [Authorize(Roles = "admin")] //44º PASO 3-7/5
+        //40º
+        [Authorize(Roles = "admin")] //44º - 3-7/5
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -48,7 +48,7 @@ namespace API_Peliculas.Controllers
 
         // ///////////////////////////////////////////////////////////////////////////////////
 
-        [Authorize(Roles = "admin")] //44º PASO 3-8/5
+        [Authorize(Roles = "admin")] //44º - 3-8/5
         [HttpGet("{usuarioId:int}", Name = "GetUsuario")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -68,8 +68,8 @@ namespace API_Peliculas.Controllers
 
         // ///////////////////////////////////////////////////////////////////////////////////
 
-        //41º PASO
-        [AllowAnonymous] //45º PASO 7/
+        //41º
+        [AllowAnonymous] //45º - 7/
         [HttpPost("registro")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -103,8 +103,8 @@ namespace API_Peliculas.Controllers
 
         // ///////////////////////////////////////////////////////////////////////////////////
 
-        //43º PASO
-        [AllowAnonymous] //45º PASO 8/
+        //43º
+        [AllowAnonymous] //45º - 8/
         [HttpPost("login")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

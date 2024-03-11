@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API_Peliculas.Controllers
 {
-    //11º PASO
+    //11º
     [ApiController]
     [Route("api/categorias")] //[Route("api/[controller]")] //Es otra opcion
     public class CategoriasController : ControllerBase //ControllerBase es un controlador para APIs
@@ -24,8 +24,11 @@ namespace API_Peliculas.Controllers
 
         // ///////////////////////////////////////////////////////////////////////////////////
 
-        [AllowAnonymous] //45º PASO 1/
+        [AllowAnonymous] //45º - 1/
         [HttpGet]
+        //[ResponseCache(Duration = 20)] //48º - 1/3
+        //[ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)] //48º - 3/3 - PARA NO GUARDAR LOS ERRORES GUARDADOS EN CACHE
+        [ResponseCache(CacheProfileName = "PorDefecto20Segundos")] //49º 3/3
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public IActionResult GetCategorias()
@@ -43,9 +46,11 @@ namespace API_Peliculas.Controllers
 
         // ///////////////////////////////////////////////////////////////////////////////////
 
-        //12º PASO
-        [AllowAnonymous] //45º PASO 2/
+        //12º
+        [AllowAnonymous] //45º - 2/
         [HttpGet("{categoriaId:int}", Name = "GetCategoria")]
+        //[ResponseCache(Duration = 30)] //48º - 2/3
+        [ResponseCache(CacheProfileName = "PorDefecto20Segundos")] //49º 2/3
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
