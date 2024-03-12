@@ -2,7 +2,7 @@
 
 namespace API_Peliculas.Repositorio.IRepositorio
 {
-    //6º PASO
+    //6º
     public interface ICategoriaRepositorio
     {
         ICollection<Categoria> GetCategorias();

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API_Peliculas.Controllers
 {
-    //23º PASO
+    //23º
     [ApiController]
     [Route("api/peliculas")] //[Route("api/[controller]")] //Es otra opcion
     public class PeliculasController : ControllerBase
@@ -24,7 +24,7 @@ namespace API_Peliculas.Controllers
 
         // ///////////////////////////////////////////////////////////////////////////////////
 
-        [AllowAnonymous] //45º PASO 3/
+        [AllowAnonymous] //45º - 3/
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -43,7 +43,7 @@ namespace API_Peliculas.Controllers
 
         // ///////////////////////////////////////////////////////////////////////////////////
 
-        [AllowAnonymous] //45º PASO 4/
+        [AllowAnonymous] //45º - 4/
         [HttpGet("{peliculaId:int}", Name = "GetPelicula")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -62,7 +62,7 @@ namespace API_Peliculas.Controllers
 
         // ///////////////////////////////////////////////////////////////////////////////////
 
-        [Authorize(Roles = "admin")] //44º PASO 3-4/5
+        [Authorize(Roles = "admin")] //44º - 3-4/5
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(PeliculaDto))]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -95,7 +95,7 @@ namespace API_Peliculas.Controllers
 
         // ///////////////////////////////////////////////////////////////////////////////////
 
-        [Authorize(Roles = "admin")] //44º PASO 3-5/5
+        [Authorize(Roles = "admin")] //44º - 3-5/5
         [HttpPatch("{peliculaId:int}", Name = "ActualizarPatchPelicula")]
         [ProducesResponseType(204)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -120,7 +120,7 @@ namespace API_Peliculas.Controllers
 
         // ///////////////////////////////////////////////////////////////////////////////////
 
-        [Authorize(Roles = "admin")] //44º PASO 3-6/5
+        [Authorize(Roles = "admin")] //44º - 3-6/5
         [HttpDelete("{peliculaId:int}", Name = "BorrarPelicula")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -144,7 +144,7 @@ namespace API_Peliculas.Controllers
 
         // ///////////////////////////////////////////////////////////////////////////////////
 
-        [AllowAnonymous] //45º PASO 5/
+        [AllowAnonymous] //45º - 5/
         [HttpGet("GetPeliculasEnCategoria/{categoriaId:int}")]
         public IActionResult GetPeliculasEnCategoria(int categoriaId)
         {
@@ -164,7 +164,7 @@ namespace API_Peliculas.Controllers
 
         // ///////////////////////////////////////////////////////////////////////////////////
 
-        [AllowAnonymous] //45º PASO 6/
+        [AllowAnonymous] //45º - 6/
         [HttpGet("Buscar")]
         public IActionResult Buscar(string nombre)
         {

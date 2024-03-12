@@ -1,6 +1,6 @@
 ﻿namespace API_Peliculas.Modelos.Dtos
 {
-    //31º PASO
+    //31º
     public class UsuarioLoginRespuestaDto //ES PARA OBTENER EL USUARIO Y EL TOKEN UNA VEZ LOGUEADO CORRECTAMENTE 
     {
         public UsuarioDatosDto Usuario { get; set; }

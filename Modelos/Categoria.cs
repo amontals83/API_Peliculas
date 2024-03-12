@@ -2,7 +2,7 @@
 
 namespace API_Peliculas.Modelos
 {
-    //1º PASO
+    //1º
     public class Categoria
     {
         [Key]

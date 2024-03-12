@@ -2,7 +2,7 @@
 
 namespace API_Peliculas.Modelos.Dtos
 {
-    //9º PASO
+    //9º
     public class CrearCategoriaDto
     {
         //Esta validación es importante, sino se crea sin nombre la categoría

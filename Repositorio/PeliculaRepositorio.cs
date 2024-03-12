@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API_Peliculas.Repositorio
 {
-    //22º PASO
+    //22º
     public class PeliculaRepositorio : IPeliculaRepositorio
     {
         private readonly ApplicationDbContext _bd;

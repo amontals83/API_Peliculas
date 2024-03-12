@@ -4,7 +4,7 @@ using API_Peliculas.Repositorio.IRepositorio;
 
 namespace API_Peliculas.Repositorio
 {
-    //7º PASO
+    //7º
     public class CategoriaRepositorio : ICategoriaRepositorio
     {
         private readonly ApplicationDbContext _bd;

@@ -68,8 +68,8 @@ namespace API_Peliculas.Controllers
 
         // ///////////////////////////////////////////////////////////////////////////////////
 
-        //13º PASO
-        [Authorize(Roles = "admin")] //44º PASO 3-1/5
+        //13º
+        [Authorize(Roles = "admin")] //44º - 3-1/5
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(CategoriaDto))]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -101,8 +101,8 @@ namespace API_Peliculas.Controllers
 
         // ///////////////////////////////////////////////////////////////////////////////////
 
-        //14º PASO
-        [Authorize(Roles = "admin")] //44º PASO 3-2/5
+        //14º
+        [Authorize(Roles = "admin")] //44º - 3-2/5
         [HttpPatch("{categoriaId:int}", Name = "ActualizarPatchCategoria")]
         [ProducesResponseType(201, Type = typeof(CategoriaDto))]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -127,8 +127,8 @@ namespace API_Peliculas.Controllers
 
         // ///////////////////////////////////////////////////////////////////////////////////
 
-        //15º PASO
-        [Authorize(Roles = "admin")] //44º PASO 3-3/5
+        //15º
+        [Authorize(Roles = "admin")] //44º - 3-3/5
         [HttpDelete("{categoriaId:int}", Name = "BorrarCategoria")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

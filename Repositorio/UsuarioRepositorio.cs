@@ -12,11 +12,11 @@ using XSystem.Security.Cryptography;
 
 namespace API_Peliculas.Repositorio
 {
-    //34º PASO - AQUI HAY CODIGO QUE SE HA MODIFICADO AL CAMBIAR A IDENTITY
+    //34º
     public class UsuarioRepositorio : IUsuarioRepositorio
     {
         private readonly ApplicationDbContext _bd;
-        private string claveSecreta; //37º PASO 3/4
+        private string claveSecreta; //37º - 3/4
         private readonly UserManager<AppUsuario> _userManager; //55º
         private readonly RoleManager<IdentityRole> _roleManager; //56º
         private readonly IMapper _mapper;
@@ -25,7 +25,7 @@ namespace API_Peliculas.Repositorio
             UserManager<AppUsuario> userManager, RoleManager<IdentityRole> roleManager, IMapper mapper)
         {
             _bd = bd;
-            claveSecreta = config.GetValue<string>("ApiSettings:Secreta"); //37º PASO 4/4
+            claveSecreta = config.GetValue<string>("ApiSettings:Secreta"); //37º - 4/4
             _roleManager = roleManager;
             _userManager = userManager;
             _roleManager = roleManager;
@@ -34,13 +34,11 @@ namespace API_Peliculas.Repositorio
 
         public AppUsuario GetUsuario(string usuarioId)
         {
-            //return _bd.Usuario.FirstOrDefault(u => u.Id == usuarioId);
             return _bd.AppUsuario.FirstOrDefault(u => u.Id == usuarioId);
         }
 
         public ICollection<AppUsuario> GetUsuarios()
         {
-            //return _bd.Usuario.OrderBy(u => u.NombreUsuario).ToList();
             return _bd.AppUsuario.OrderBy(u => u.UserName).ToList();
         }
 
@@ -56,8 +54,6 @@ namespace API_Peliculas.Repositorio
 
         public async Task<UsuarioDatosDto> Registro(UsuarioRegistroDto usuarioRegistroDto)
         {
-            //var passwordEncriptado = obtenerMD5(usuarioRegistroDto.Password);
-
             AppUsuario usuario = new AppUsuario()
             {
                 UserName = usuarioRegistroDto.NombreUsuario,
@@ -90,33 +86,14 @@ namespace API_Peliculas.Repositorio
 
             }
 
-            //_bd.Usuario.Add(usuario);
-            //await _bd.SaveChangesAsync();
-            //usuario.Password = passwordEncriptado;
-            //return usuario;
             return new UsuarioDatosDto();
         }
 
-        //35º PASO
-        //Método para encriptar contraseña con MD5 se usa tanto en el Acceso como en el Registro
-        /*public static string obtenerMD5(string password)
-        {
-            MD5CryptoServiceProvider x = new MD5CryptoServiceProvider();
-            byte[] data = System.Text.Encoding.UTF8.GetBytes(password);
-            data = x.ComputeHash(data);
-            string resp = "";
-            for (int i = 0; i < data.Length; i++)
-                resp += data[i].ToString("x2").ToLower();
-            return resp;
-        }*/
-
-        //36º PASO
+        //36º
         public async Task<UsuarioLoginRespuestaDto> Login(UsuarioLoginDto usuarioLoginDto)
         {
-            //var passwordEncriptado = obtenerMD5(usuarioLoginDto.Password);
             var usuario = _bd.AppUsuario.FirstOrDefault(
-                u => u.UserName.ToLower() == usuarioLoginDto.NombreUsuario.ToLower()
-                /*&& u.Password == passwordEncriptado*/);
+                u => u.UserName.ToLower() == usuarioLoginDto.NombreUsuario.ToLower());
             bool IsValida = await _userManager.CheckPasswordAsync(usuario, usuarioLoginDto.Password);
 
             if (usuario == null || IsValida)
@@ -131,7 +108,7 @@ namespace API_Peliculas.Repositorio
             var roles = await _userManager.GetRolesAsync(usuario);
 
             var manejadorToken = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(claveSecreta); //37º PASO 1/4
+            var key = Encoding.ASCII.GetBytes(claveSecreta); //37º - 1/4
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]

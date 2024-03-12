@@ -49,7 +49,7 @@ namespace API_Peliculas.Controllers
         // ///////////////////////////////////////////////////////////////////////////////////
 
         [Authorize(Roles = "admin")] //44º - 3-8/5
-        [HttpGet("{usuarioId:int}", Name = "GetUsuario")]
+        [HttpGet("{usuarioId}", Name = "GetUsuario")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

@@ -2,7 +2,7 @@
 
 namespace API_Peliculas.Modelos.Dtos
 {
-    //8º PASO
+    //8º
     public class CategoriaDto
     {
         public int Id { get; set; }

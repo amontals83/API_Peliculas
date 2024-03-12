@@ -2,7 +2,7 @@
 
 namespace API_Peliculas.Modelos.Dtos
 {
-    //29º PASO
+    //29º
     public class UsuarioRegistroDto
     {
         [Required(ErrorMessage = "El usuario es obligatorio")]

@@ -1,6 +1,6 @@
 ﻿namespace API_Peliculas.Modelos.Dtos
 {
-    //28º PASO
+    //28º
     public class UsuarioDatosDto
     {
         public string Id { get; set; }

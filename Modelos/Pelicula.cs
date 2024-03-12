@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API_Peliculas.Modelos
 {
-    //16º PASO
+    //16º
     public class Pelicula
     {
         public int Id { get; set; }
